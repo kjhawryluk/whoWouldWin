@@ -8,7 +8,7 @@ import retrofit2.http.GET;
  * Created by mertsimsek on 19/05/2017.
  */
 
-public interface StarWarsDBService {
+public interface StarWarsRestService {
 
     //TODO Look up how to use @GET from that site from the other day.
 
