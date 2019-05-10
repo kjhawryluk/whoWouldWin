@@ -3,9 +3,13 @@ package edu.uchicago.kjhawryluk.prowebservice.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import edu.uchicago.kjhawryluk.prowebservice.data.Status;
+
+import static edu.uchicago.kjhawryluk.prowebservice.data.Status.*;
 
 /**
  * A generic class that holds a value with its loading status.
+ * Taken from roomMovies
  * @param <T>
  */
 public class Resource<T> {

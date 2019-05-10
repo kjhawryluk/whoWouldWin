@@ -3,9 +3,14 @@ package edu.uchicago.kjhawryluk.prowebservice.data;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PeopleResponse;
+
 import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PeopleDao;
+import edu.uchicago.kjhawryluk.prowebservice.data.remote.MovieDBService;
+import retrofit2.Call;
 
 /**
  * Created by mertsimsek on 19/05/2017.
@@ -16,35 +21,35 @@ public class StarWarsRepository {
     private final PeopleDao mPeopleDao;
     private final MovieDBService movieDBService;
 
-    @Inject
-    public StarWarsRepository(MovieDao mPeopleDao, MovieDBService movieDBService) {
+    //@Inject
+    public StarWarsRepository(PeopleDao mPeopleDao, MovieDBService movieDBService) {
         this.mPeopleDao = mPeopleDao;
         this.movieDBService = movieDBService;
     }
 
-    public LiveData<Resource<List<MovieEntity>>> loadPopularMovies() {
-        return new NetworkBoundResource<List<MovieEntity>, MoviesResponse>() {
+    public LiveData<Resource<List<PersonEntity>>> loadPopularMovies() {
+        return new NetworkBoundResource<List<PersonEntity>, PeopleResponse>() {
 
             @Override
-            protected void saveCallResult(@NonNull MoviesResponse item) {
-                mPeopleDao.saveMovies(item.getResults());
+            protected void saveCallResult(@NonNull PeopleResponse item) {
+                mPeopleDao.savePeople(item.getPersonResponses());
             }
 
             @NonNull
             @Override
-            protected LiveData<List<MovieEntity>> loadFromDb() {
-                return mPeopleDao.loadMovies();
+            protected LiveData<List<PersonEntity>> loadFromDb() {
+                return mPeopleDao.loadPeople();
             }
 
             @NonNull
             @Override
-            protected Call<MoviesResponse> createCall() {
-                return movieDBService.loadMovies();
+            protected Call<PeopleResponse> createCall() {
+                return movieDBService.loadPeople();
             }
         }.getAsLiveData();
     }
 
-    public LiveData<MovieEntity> getMovie(int id){
-        return mPeopleDao.getMovie(id);
+    public LiveData<PersonEntity> getPerson(String name) {
+        return mPeopleDao.getPerson(name);
     }
 }
