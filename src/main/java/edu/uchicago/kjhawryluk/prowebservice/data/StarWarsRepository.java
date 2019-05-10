@@ -1,15 +1,17 @@
 package edu.uchicago.kjhawryluk.prowebservice.data;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
+import edu.uchicago.kjhawryluk.prowebservice.data.local.StarWarsDatabase;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PeopleResponse;
 
 import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PeopleDao;
-import edu.uchicago.kjhawryluk.prowebservice.data.remote.MovieDBService;
+import edu.uchicago.kjhawryluk.prowebservice.data.remote.StarWarsDBService;
 import retrofit2.Call;
 
 /**
@@ -19,15 +21,16 @@ import retrofit2.Call;
 public class StarWarsRepository {
 
     private final PeopleDao mPeopleDao;
-    private final MovieDBService movieDBService;
+    private final StarWarsDBService mStarWarsDBService;
+    private StarWarsDatabase mStarWarsDatabase;
 
-    //@Inject
-    public StarWarsRepository(PeopleDao mPeopleDao, MovieDBService movieDBService) {
-        this.mPeopleDao = mPeopleDao;
-        this.movieDBService = movieDBService;
+    public StarWarsRepository(Application application) {
+        this.mStarWarsDatabase = StarWarsDatabase.getDatabase(application);
+        this.mPeopleDao = this.mStarWarsDatabase.mPeopleDao();
+        this.mStarWarsDBService = starWarsDBService;
     }
 
-    public LiveData<Resource<List<PersonEntity>>> loadPopularMovies() {
+    public LiveData<Resource<List<PersonEntity>>> loadPeople() {
         return new NetworkBoundResource<List<PersonEntity>, PeopleResponse>() {
 
             @Override
@@ -44,7 +47,7 @@ public class StarWarsRepository {
             @NonNull
             @Override
             protected Call<PeopleResponse> createCall() {
-                return movieDBService.loadPeople();
+                return mStarWarsDBService.loadPeople();
             }
         }.getAsLiveData();
     }
