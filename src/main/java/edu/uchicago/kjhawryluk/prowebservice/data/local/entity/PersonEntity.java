@@ -3,6 +3,8 @@ package edu.uchicago.kjhawryluk.prowebservice.data.local.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
 
 
 import com.google.gson.annotations.Expose;
@@ -10,10 +12,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import edu.uchicago.kjhawryluk.prowebservice.data.typeconverters.ListConverter;
+import io.reactivex.annotations.NonNull;
+
 @Entity(tableName = "people")
 public class PersonEntity {
 
     @PrimaryKey
+    @NonNull
     @SerializedName("name")
     @Expose
     private String name;
@@ -41,15 +47,19 @@ public class PersonEntity {
     @SerializedName("homeworld")
     @Expose
     private String homeworld;
+    @TypeConverters({ListConverter.class})
     @SerializedName("films")
     @Expose
     private List<String> films = null;
     @SerializedName("species")
     @Expose
+    @TypeConverters({ListConverter.class})
     private List<String> species = null;
+    @TypeConverters({ListConverter.class})
     @SerializedName("vehicles")
     @Expose
     private List<String> vehicles = null;
+    @TypeConverters({ListConverter.class})
     @SerializedName("starships")
     @Expose
     private List<String> starships = null;

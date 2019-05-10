@@ -20,19 +20,19 @@ public class FighterFragment extends Fragment {
 
     private int fighterId;
     @BindView(R.id.fighterNameTextView)
-    private TextView fighterNameTextView;
+    TextView fighterNameTextView;
     @BindView(R.id.heightTextView)
-    private TextView heightTextView;
+    TextView heightTextView;
     @BindView(R.id.massTextView)
-    private TextView massTextView;
+    TextView massTextView;
     @BindView(R.id.hairColorTextView)
-    private TextView hairColorTextView;
+    TextView hairColorTextView;
     @BindView(R.id.eyeColorTextView)
-    private TextView eyeColorTextView;
+    TextView eyeColorTextView;
     @BindView(R.id.birthYearTextView)
-    private TextView birthYearTextView;
+    TextView birthYearTextView;
     @BindView(R.id.genderTextView)
-    private TextView genderTextView;
+    TextView genderTextView;
 
 
     public FighterFragment() {

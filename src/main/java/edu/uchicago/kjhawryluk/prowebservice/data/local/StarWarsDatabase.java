@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -13,12 +14,14 @@ import java.util.Date;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PeopleDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.typeconverters.ListConverter;
 
 /**
  * Based on roomMovies by mertsimsek on 19/05/2017.
  */
 
 @Database(entities = {PersonEntity.class}, version = 1)
+@TypeConverters({ListConverter.class})
 public abstract class StarWarsDatabase extends RoomDatabase {
 
     public abstract PeopleDao mPeopleDao();

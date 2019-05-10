@@ -33,18 +33,18 @@
         android:layout_weight="10">
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/fighter1Spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/fighter2Spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/planetSpinner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10" />
