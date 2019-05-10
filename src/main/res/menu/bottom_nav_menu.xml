@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fighter1Nav"
+        android:icon="@drawable/ic_left"
+        android:title="Fighter 1" />
+
+    <item
+        android:id="@+id/fightNav"
+        android:icon="@drawable/ic_center"
+        android:title="Fight" />
+
+    <item
+        android:id="@+id/fighter2Nav"
+        android:icon="@drawable/ic_right"
+        android:title="Fighter 2" />
+
+</menu>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".FighterFragment">
+
+    <TextView
+        android:id="@+id/fighterNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:columnCount="2"
+        app:rowCount="7"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/height"
+            app:layout_row="0"
+            app:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/heightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="172cm"
+            app:layout_row="0"
+            app:layout_column="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mass"
+            app:layout_row="1"
+            app:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/massTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="77kg"
+            app:layout_row="1"
+            app:layout_column="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hair Color"
+            app:layout_row="2"
+            app:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/hairColorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blond"
+            app:layout_row="2"
+            app:layout_column="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skin Color"
+            app:layout_row="3"
+            app:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/skinColorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fair"
+            app:layout_row="3"
+            app:layout_column="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eye Color"
+            app:layout_row="4"
+            app:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/eyeColorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blue"
+            app:layout_row="4"
+            app:layout_column="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Birth Year"
+            app:layout_row="5"
+            app:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/birthYearTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09BBY"
+            app:layout_row="5"
+            app:layout_column="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            app:layout_row="6"
+            app:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/genderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="male"
+            app:layout_row="6"
+            app:layout_column="1"/>
+    </android.support.v7.widget.GridLayout>
+
+</LinearLayout>
