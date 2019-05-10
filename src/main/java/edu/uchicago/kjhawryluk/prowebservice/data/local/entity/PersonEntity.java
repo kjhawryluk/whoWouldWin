@@ -3,8 +3,8 @@ package edu.uchicago.kjhawryluk.prowebservice.data.local.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 
 
 import com.google.gson.annotations.Expose;
@@ -13,7 +13,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.typeconverters.ListConverter;
-import io.reactivex.annotations.NonNull;
 
 @Entity(tableName = "people")
 public class PersonEntity {

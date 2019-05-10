@@ -25,7 +25,7 @@ import edu.uchicago.kjhawryluk.prowebservice.viewmodels.PeopleViewModel;
 public class FightFragment extends Fragment {
 
     private OnFightListener mListener;
-    @BindView(R.id.fighter1Spinner)
+    // @BindView(R.id.fighter1Spinner)
     Spinner mFighter1Spinner;
     @BindView(R.id.fighter2Spinner)
     Spinner mFighter2Spinner;
@@ -43,6 +43,7 @@ public class FightFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_fight, container, false);
         mPeopleViewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
         FightersAdaptor spinnerAdapter = new FightersAdaptor(container.getContext(), android.R.layout.simple_spinner_item);
+        mFighter1Spinner = root.findViewById(R.id.fighter1Spinner);
         mFighter1Spinner.setAdapter(spinnerAdapter);
         mPeopleViewModel.getFighters().observe(this, (Observer<Resource<List<PersonEntity>>>)
                 fighters -> spinnerAdapter.setPersonEntities(fighters));
