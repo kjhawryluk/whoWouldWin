@@ -49,17 +49,18 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     @MainThread
     private void saveResultAndReInit(RequestType response) {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, LiveData<ResultType>>() {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected LiveData<ResultType> doInBackground(Void... voids) {
                 saveCallResult(response);
-                return null;
+                LiveData<ResultType> resultFromDb = loadFromDb();
+                return resultFromDb;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                result.addSource(loadFromDb(), newData -> result.setValue(Resource.success(newData)));
+            protected void onPostExecute(LiveData<ResultType> resultFromDb) {
+                result.addSource(resultFromDb, newData -> result.setValue(Resource.success(newData)));
             }
         }.execute();
     }
@@ -73,7 +74,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     @NonNull
-    @MainThread
     protected abstract LiveData<ResultType> loadFromDb();
 
     @NonNull

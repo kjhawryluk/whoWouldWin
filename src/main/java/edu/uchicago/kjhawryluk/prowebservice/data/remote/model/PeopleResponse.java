@@ -17,7 +17,7 @@ public class PeopleResponse {
     @SerializedName("previous")
     @Expose
     private Object previous;
-    @SerializedName("result")
+    @SerializedName("results")
     @Expose
     private List<PersonEntity> mPersonResponses = null;
 
