@@ -1,6 +1,7 @@
 package edu.uchicago.kjhawryluk.prowebservice.data.remote;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PeopleResponse;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

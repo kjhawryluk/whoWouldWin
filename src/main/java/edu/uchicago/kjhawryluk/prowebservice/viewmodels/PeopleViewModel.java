@@ -14,19 +14,20 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 public class PeopleViewModel extends AndroidViewModel {
 
     private StarWarsRepository mStarWarsRepository;
-    private LiveData<Resource<List<PersonEntity>>> fighters;
+    private List<PersonEntity> fighters;
 
     public PeopleViewModel(@NonNull Application application) {
         super(application);
         mStarWarsRepository = new StarWarsRepository(application);
-        fighters = mStarWarsRepository.loadPeople();
+        //    fighters = mStarWarsRepository.loadPeople();
+
     }
 
-    public LiveData<Resource<List<PersonEntity>>> getFighters() {
+    public List<PersonEntity> getFighters() {
         return fighters;
     }
 
-    public void setFighters(LiveData<Resource<List<PersonEntity>>> fighters) {
+    public void setFighters(List<PersonEntity> fighters) {
         this.fighters = fighters;
     }
 }
