@@ -11,6 +11,7 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.ApiConstants;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PeopleResponse;
 
+import java.net.InetAddress;
 import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PeopleDao;
@@ -42,29 +43,31 @@ public class StarWarsRepository {
         this.mStarWarsDatabase = StarWarsDatabase.getDatabase(application);
         this.mPeopleDao = this.mStarWarsDatabase.mPeopleDao();
         this.mStarWarsRestService = getStarWarsRestService();
-        mStarWarsRestService.loadPeople()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<PeopleResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        compositeDisposable.add(d);
-                    }
+        if (isInternetAvailable()) {
+            mStarWarsRestService.loadPeople()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<PeopleResponse>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            compositeDisposable.add(d);
+                        }
 
-                    @Override
-                    public void onSuccess(PeopleResponse people) {
+                        @Override
+                        public void onSuccess(PeopleResponse people) {
 
-                        // data is ready and we can update the UI
-                        saveResult(people);
-                    }
+                            // data is ready and we can update the UI
+                            saveResult(people);
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        // oops, we best show some error message
-                        Log.e("REPSONSE ERROR", e.getMessage());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            // oops, we best show some error message
+                            Log.e("REPSONSE ERROR", e.getMessage());
+                        }
 
-                });
+                    });
+        }
 //        if (!compositeDisposable.isDisposed()) {
 //            compositeDisposable.dispose();
 //        }
@@ -120,5 +123,16 @@ public class StarWarsRepository {
 
     public LiveData<PersonEntity> getPerson(String name) {
         return mPeopleDao.getPerson(name);
+    }
+
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com");
+            //You can replace it with your name
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

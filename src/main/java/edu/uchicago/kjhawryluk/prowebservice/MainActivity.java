@@ -18,23 +18,37 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            String fighterName;
             switch (item.getItemId()) {
                 case R.id.fighter1Nav:
-                    loadFighter(1);
+                    fighterName = getFighterName(R.id.fighter1Spinner);
+                    if (fighterName != null)
+                        loadFighter(fighterName);
                     return true;
                 case R.id.fightNav:
                     loadFight();
                     return true;
                 case R.id.fighter2Nav:
-                    loadFighter(100);
+                    fighterName = getFighterName(R.id.fighter2Spinner);
+                    if (fighterName != null)
+                        loadFighter(fighterName);
                     return true;
             }
             return false;
         }
     };
 
-    void loadFighter(int id){
-        FighterFragment fighterFragment = FighterFragment.newInstance(id);
+    String getFighterName(int spinnerId) {
+        Spinner spinner = findViewById(spinnerId);
+        if (spinner != null && spinner.getCount() > 0) {
+            return spinner.getSelectedItem().toString();
+        }
+        return null;
+    }
+
+
+    void loadFighter(String fighterName) {
+        FighterFragment fighterFragment = FighterFragment.newInstance(fighterName);
         swapInFragment(fighterFragment);
     }
 

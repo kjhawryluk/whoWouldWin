@@ -16,10 +16,9 @@ import butterknife.BindView;
  * create an instance of this fragment.
  */
 public class FighterFragment extends Fragment {
-    private static final String FIGHTER_ID = "fighterId";
+    private static final String FIGHTER_NAME = "fighterName";
 
-    private int fighterId;
-    @BindView(R.id.fighterNameTextView)
+    private String mFighterName;
     TextView fighterNameTextView;
     @BindView(R.id.heightTextView)
     TextView heightTextView;
@@ -39,10 +38,10 @@ public class FighterFragment extends Fragment {
     }
 
 
-    public static FighterFragment newInstance(int fighterId) {
+    public static FighterFragment newInstance(String fighterName) {
         FighterFragment fragment = new FighterFragment();
         Bundle args = new Bundle();
-        args.putInt(FIGHTER_ID, fighterId);
+        args.putString(FIGHTER_NAME, fighterName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +50,7 @@ public class FighterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            fighterId = getArguments().getInt(FIGHTER_ID);
+            mFighterName = getArguments().getString(FIGHTER_NAME);
         }
     }
 
@@ -60,8 +59,9 @@ public class FighterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_fighter, container, false);
-        fighterId = getArguments().getInt(FIGHTER_ID);
-        fighterNameTextView.setText(String.valueOf(fighterId));
+        mFighterName = getArguments().getString(FIGHTER_NAME);
+        fighterNameTextView = root.findViewById(R.id.fighterNameTextView);
+        fighterNameTextView.setText(mFighterName);
         return root;
     }
 

@@ -46,26 +46,13 @@ public class FightFragment extends Fragment {
         mPeopleViewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
         FightersAdaptor spinnerAdapter = new FightersAdaptor(container.getContext(), android.R.layout.simple_spinner_item);
         mFighter1Spinner = root.findViewById(R.id.fighter1Spinner);
+        mFighter2Spinner = root.findViewById(R.id.fighter2Spinner);
 
+        //Using the same adaptor to listen for new fighters.
         mFighter1Spinner.setAdapter(spinnerAdapter);
+        mFighter2Spinner.setAdapter(spinnerAdapter);
         mPeopleViewModel.getFighters().observe(this, (Observer<List<PersonEntity>>)
                 fighters -> spinnerAdapter.setPersonEntities(fighters));
-        mFighter1Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//               if(parent.getCount() > 0){
-//                   Object item = parent.getSelectedItem();
-//                   if(item != null)
-//                       Log.i("ITEM CLICKED", parent.getSelectedItem().toString());
-//
-//               }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         return root;
     }
 
