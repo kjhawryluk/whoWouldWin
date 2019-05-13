@@ -20,7 +20,7 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
  * Modified from: https://medium.com/mindorks/custom-array-adapters-made-easy-b6c4930560dd
  */
 public class FightersAdaptor extends ArrayAdapter<PersonEntity> {
-    private Resource<List<PersonEntity>> mPersonEntities;
+    private List<PersonEntity> mPersonEntities;
     private Context mContext;
 
     public FightersAdaptor(@NonNull Context context, int resource) {
@@ -28,12 +28,25 @@ public class FightersAdaptor extends ArrayAdapter<PersonEntity> {
         mContext = context;
     }
 
-    public Resource<List<PersonEntity>> getPersonEntities() {
+    public List<PersonEntity> getPersonEntities() {
         return mPersonEntities;
     }
 
-    public void setPersonEntities(Resource<List<PersonEntity>> personEntities) {
+    @Nullable
+    @Override
+    public PersonEntity getItem(int position) {
+        return mPersonEntities.get(position);
+    }
+
+
+    @Override
+    public int getPosition(@Nullable PersonEntity item) {
+        return mPersonEntities.indexOf(item);
+    }
+
+    public void setPersonEntities(List<PersonEntity> personEntities) {
         mPersonEntities = personEntities;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -43,12 +56,17 @@ public class FightersAdaptor extends ArrayAdapter<PersonEntity> {
         if (listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.spinner_closed, parent, false);
 
-        PersonEntity currentPerson = mPersonEntities.data.get(position);
+        PersonEntity currentPerson = mPersonEntities.get(position);
 
         TextView spinnerText = (TextView) listItem.findViewById(R.id.spinnerText);
         spinnerText.setText(currentPerson.getName());
         return listItem;
     }
 
-
+    @Override
+    public int getCount() {
+        if (mPersonEntities == null)
+            return 0;
+        return mPersonEntities.size();
+    }
 }

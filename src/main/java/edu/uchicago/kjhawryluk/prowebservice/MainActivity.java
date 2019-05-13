@@ -5,7 +5,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements FightFragment.OnFightListener {
@@ -64,4 +66,13 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
 
     public void onFightFragmentInteraction(){
     }
+
+    @Override
+    public void onSpinner1Interaction() {
+        Spinner fighter1Spinner = findViewById(R.id.fighter1Spinner);
+        if (fighter1Spinner != null) {
+            Log.i("FIGHTER", "AHHH");
+        }
+    }
+
 }

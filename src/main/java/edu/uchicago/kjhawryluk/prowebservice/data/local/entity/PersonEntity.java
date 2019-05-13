@@ -199,4 +199,10 @@ public class PersonEntity {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
