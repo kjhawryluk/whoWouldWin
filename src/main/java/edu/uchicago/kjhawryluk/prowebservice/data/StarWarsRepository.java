@@ -36,7 +36,7 @@ public class StarWarsRepository {
     private final PeopleDao mPeopleDao;
     private final StarWarsRestService mStarWarsRestService;
     private StarWarsDatabase mStarWarsDatabase;
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    public static final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     public StarWarsRepository(Application application) {
@@ -68,9 +68,6 @@ public class StarWarsRepository {
 
                     });
         }
-//        if (!compositeDisposable.isDisposed()) {
-//            compositeDisposable.dispose();
-//        }
     }
 
     void saveResult(PeopleResponse response) {
@@ -93,29 +90,6 @@ public class StarWarsRepository {
                 .build();
         return retrofit.create(StarWarsRestService.class);
     }
-
-//    public LiveData<Resource<List<PersonEntity>>> loadPeople() {
-//        return new NetworkBoundResource<List<PersonEntity>, PeopleResponse>() {
-//
-//            @Override
-//            protected void saveCallResult(@NonNull PeopleResponse item) {
-//                mPeopleDao.savePeople(item.getPersonResponses());
-//            }
-//
-//            @NonNull
-//            @Override
-//            protected LiveData<List<PersonEntity>> loadFromDb() {
-//                return mPeopleDao.loadPeople();
-//            }
-//
-//            @NonNull
-//            @Override
-//            protected Call<PeopleResponse> createCall() {
-//                return mStarWarsRestService.loadPeople();
-//            }
-//        }.getAsLiveData();
-//    }
-
 
     public LiveData<List<PersonEntity>> loadPeople() {
         return mPeopleDao.loadPeople();

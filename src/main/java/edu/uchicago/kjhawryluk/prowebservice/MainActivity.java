@@ -10,8 +10,13 @@ import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import edu.uchicago.kjhawryluk.prowebservice.data.StarWarsRepository;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+
 public class MainActivity extends AppCompatActivity implements FightFragment.OnFightListener {
     private TextView mTextMessage;
+    private PersonEntity fighter1;
+    private PersonEntity fighter2;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -26,7 +31,11 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
                         loadFighter(fighterName);
                     return true;
                 case R.id.fightNav:
-                    loadFight();
+                    if (fighter1 == null || fighter2 == null) {
+                        initFight();
+                    } else {
+                        loadFight();
+                    }
                     return true;
                 case R.id.fighter2Nav:
                     fighterName = getFighterName(R.id.fighter2Spinner);
@@ -52,13 +61,17 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
         swapInFragment(fighterFragment);
     }
 
-    void loadFight(){
-        FightFragment fightFragment = new FightFragment();
+    void initFight() {
+        FightFragment fightFragment = FightFragment.newInstance();
         swapInFragment(fightFragment);
     }
 
+    void loadFight() {
+        FightFragment fightFragment = FightFragment.newInstance(fighter1, fighter2);
+        swapInFragment(fightFragment);
+    }
 
-    void swapInFragment(Fragment fragment){
+    void swapInFragment(Fragment fragment) {
         this.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contentContainer, fragment)
@@ -78,15 +91,31 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
     }
 
 
-    public void onFightFragmentInteraction(){
+    public void onFightFragmentInteraction() {
     }
 
     @Override
-    public void onSpinner1Interaction() {
-        Spinner fighter1Spinner = findViewById(R.id.fighter1Spinner);
-        if (fighter1Spinner != null) {
-            Log.i("FIGHTER", "AHHH");
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!StarWarsRepository.compositeDisposable.isDisposed()) {
+            StarWarsRepository.compositeDisposable.dispose();
         }
     }
 
+
+    public PersonEntity getFighter1() {
+        return fighter1;
+    }
+
+    public void setFighter1(PersonEntity fighter1) {
+        this.fighter1 = fighter1;
+    }
+
+    public PersonEntity getFighter2() {
+        return fighter2;
+    }
+
+    public void setFighter2(PersonEntity fighter2) {
+        this.fighter2 = fighter2;
+    }
 }

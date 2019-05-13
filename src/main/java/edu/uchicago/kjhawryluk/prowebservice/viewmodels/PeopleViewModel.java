@@ -15,6 +15,8 @@ public class PeopleViewModel extends AndroidViewModel {
 
     private StarWarsRepository mStarWarsRepository;
     private LiveData<List<PersonEntity>> fighters;
+    private PersonEntity fighter1;
+    private PersonEntity fighter2;
 
     public PeopleViewModel(@NonNull Application application) {
         super(application);
@@ -29,4 +31,5 @@ public class PeopleViewModel extends AndroidViewModel {
     public void setFighters(LiveData<List<PersonEntity>> fighters) {
         this.fighters = fighters;
     }
+
 }

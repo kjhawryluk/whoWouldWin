@@ -44,6 +44,15 @@ public class FightersAdaptor extends ArrayAdapter<PersonEntity> {
         return mPersonEntities.indexOf(item);
     }
 
+
+    public int getPosition(@Nullable String item) {
+        for (int pos = 0; pos < mPersonEntities.size(); pos++) {
+            if (mPersonEntities.get(pos).equals(item))
+                return pos;
+        }
+        return 0;
+    }
+
     public void setPersonEntities(List<PersonEntity> personEntities) {
         mPersonEntities = personEntities;
         notifyDataSetChanged();
