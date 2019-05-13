@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
             String fighterName;
             switch (item.getItemId()) {
                 case R.id.fighter1Nav:
-                    fighterName = getFighterName(R.id.fighter1Spinner);
+                    fighterName = fighter1.getName();
                     if (fighterName != null)
                         loadFighter(fighterName);
                     return true;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
                     }
                     return true;
                 case R.id.fighter2Nav:
-                    fighterName = getFighterName(R.id.fighter2Spinner);
+                    fighterName = fighter2.getName();
                     if (fighterName != null)
                         loadFighter(fighterName);
                     return true;
