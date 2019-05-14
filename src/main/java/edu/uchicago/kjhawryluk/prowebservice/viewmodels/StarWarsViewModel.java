@@ -10,18 +10,19 @@ import java.util.List;
 import edu.uchicago.kjhawryluk.prowebservice.data.Resource;
 import edu.uchicago.kjhawryluk.prowebservice.data.StarWarsRepository;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 
-public class PeopleViewModel extends AndroidViewModel {
+public class StarWarsViewModel extends AndroidViewModel {
 
     private StarWarsRepository mStarWarsRepository;
     private LiveData<List<PersonEntity>> fighters;
-    private PersonEntity fighter1;
-    private PersonEntity fighter2;
+    private LiveData<List<PlanetEntity>> planets;
 
-    public PeopleViewModel(@NonNull Application application) {
+    public StarWarsViewModel(@NonNull Application application) {
         super(application);
         mStarWarsRepository = new StarWarsRepository(application);
         fighters = mStarWarsRepository.loadPeople();
+        planets = mStarWarsRepository.loadPlanets();
     }
 
     public LiveData<List<PersonEntity>> getFighters() {
@@ -32,4 +33,11 @@ public class PeopleViewModel extends AndroidViewModel {
         this.fighters = fighters;
     }
 
+    public LiveData<List<PlanetEntity>> getPlanets() {
+        return planets;
+    }
+
+    public void setPlanets(LiveData<List<PlanetEntity>> planets) {
+        this.planets = planets;
+    }
 }

@@ -1,40 +1,38 @@
 package edu.uchicago.kjhawryluk.prowebservice;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.io.Serializable;
 import java.util.List;
 
-import butterknife.BindView;
 import edu.uchicago.kjhawryluk.prowebservice.adaptors.FightersAdaptor;
-import edu.uchicago.kjhawryluk.prowebservice.data.Resource;
+import edu.uchicago.kjhawryluk.prowebservice.adaptors.PlanetsAdaptor;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
-import edu.uchicago.kjhawryluk.prowebservice.viewmodels.PeopleViewModel;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
+import edu.uchicago.kjhawryluk.prowebservice.viewmodels.StarWarsViewModel;
 
 
 public class FightFragment extends Fragment {
 
     public static final String FIGHTER1 = "FIGHTER1";
     public static final String FIGHTER2 = "FIGHTER2";
+    public static final String PLANET = "PLANET";
     private OnFightListener mListener;
-    FightersAdaptor spinnerAdapter;
+    FightersAdaptor mFightersAdaptor;
+    PlanetsAdaptor mPlanetsAdaptor;
     Spinner mFighter1Spinner;
-    @BindView(R.id.fighter2Spinner)
     Spinner mFighter2Spinner;
-    private PeopleViewModel mPeopleViewModel;
+    Spinner mPlanetSpinner;
+    private StarWarsViewModel mStarWarsViewModel;
 
     public FightFragment() {
         // Required empty public constructor
@@ -44,11 +42,12 @@ public class FightFragment extends Fragment {
         return new FightFragment();
     }
 
-    public static FightFragment newInstance(Serializable fighter1, Serializable fighter2) {
+    public static FightFragment newInstance(Serializable fighter1, Serializable fighter2, Serializable planet) {
         FightFragment fragment = new FightFragment();
         Bundle args = new Bundle();
         args.putSerializable(FIGHTER1, fighter1);
         args.putSerializable(FIGHTER2, fighter2);
+        args.putSerializable(PLANET, planet);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,22 +57,31 @@ public class FightFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_fight, container, false);
-        mPeopleViewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
-        spinnerAdapter = new FightersAdaptor(container.getContext(), android.R.layout.simple_spinner_item);
+        mStarWarsViewModel = ViewModelProviders.of(this).get(StarWarsViewModel.class);
+        mFightersAdaptor = new FightersAdaptor(container.getContext(), android.R.layout.simple_spinner_item);
+        mPlanetsAdaptor = new PlanetsAdaptor(container.getContext(), android.R.layout.simple_spinner_item);
         mFighter1Spinner = root.findViewById(R.id.fighter1Spinner);
         mFighter2Spinner = root.findViewById(R.id.fighter2Spinner);
+        mPlanetSpinner = root.findViewById(R.id.planetSpinner);
 
         //Using the same adaptor to listen for new fighters.
-        mFighter1Spinner.setAdapter(spinnerAdapter);
-        mFighter2Spinner.setAdapter(spinnerAdapter);
-        mPeopleViewModel.getFighters().observe(this, (Observer<List<PersonEntity>>)
+        mFighter1Spinner.setAdapter(mFightersAdaptor);
+        mFighter2Spinner.setAdapter(mFightersAdaptor);
+        mPlanetSpinner.setAdapter(mPlanetsAdaptor);
+        mStarWarsViewModel.getFighters().observe(this, (Observer<List<PersonEntity>>)
                 fighters -> {
-                    spinnerAdapter.setPersonEntities(fighters);
+                    mFightersAdaptor.setPersonEntities(fighters);
+                    setSpinnerValues();
+                });
+        mStarWarsViewModel.getPlanets().observe(this, (Observer<List<PlanetEntity>>)
+                planetEntities -> {
+                    mPlanetsAdaptor.setPlanetEntities(planetEntities);
                     setSpinnerValues();
                 });
 
         mFighter1Spinner.setOnItemSelectedListener(new SpinnerSelection(container));
         mFighter2Spinner.setOnItemSelectedListener(new SpinnerSelection(container));
+        mPlanetSpinner.setOnItemSelectedListener(new SpinnerSelection(container));
 
         return root;
     }
@@ -91,6 +99,7 @@ public class FightFragment extends Fragment {
             if (parent.getCount() > 0) {
                 ((OnFightListener) container.getContext()).setFighter1((PersonEntity) mFighter1Spinner.getSelectedItem());
                 ((OnFightListener) container.getContext()).setFighter2((PersonEntity) mFighter2Spinner.getSelectedItem());
+                ((OnFightListener) container.getContext()).setFighter2((PersonEntity) mFighter2Spinner.getSelectedItem());
             }
         }
 
@@ -104,12 +113,17 @@ public class FightFragment extends Fragment {
         if (getArguments() != null) {
             Serializable fighter1 = getArguments().getSerializable(FIGHTER1);
             Serializable fighter2 = getArguments().getSerializable(FIGHTER2);
+            Serializable planet = getArguments().getSerializable(PLANET);
             if (fighter1 != null) {
-                mFighter1Spinner.setSelection(spinnerAdapter.getPosition(fighter1.toString()));
+                mFighter1Spinner.setSelection(mFightersAdaptor.getPosition(fighter1.toString()));
             }
 
             if (fighter2 != null) {
-                mFighter2Spinner.setSelection(spinnerAdapter.getPosition(fighter2.toString()));
+                mFighter2Spinner.setSelection(mFightersAdaptor.getPosition(fighter2.toString()));
+            }
+
+            if (planet != null) {
+                mPlanetSpinner.setSelection(mPlanetsAdaptor.getPosition(planet.toString()));
             }
         }
     }
@@ -149,6 +163,8 @@ public class FightFragment extends Fragment {
         public PersonEntity getFighter2();
 
         public void setFighter2(PersonEntity fighter2);
+
+        public void setPlanet(PlanetEntity planet);
     }
 }
 

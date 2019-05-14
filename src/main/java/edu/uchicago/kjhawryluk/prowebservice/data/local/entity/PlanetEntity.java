@@ -3,6 +3,7 @@ package edu.uchicago.kjhawryluk.prowebservice.data.local.entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.Serializable;
 import java.util.List;
@@ -169,5 +170,29 @@ public class PlanetEntity implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj != null) {
+            if (obj instanceof String) {
+                return obj.equals(url);
+            } else if (obj instanceof PlanetEntity) {
+                PlanetEntity objEntity = (PlanetEntity) obj;
+                return objEntity.getUrl().equals(url);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

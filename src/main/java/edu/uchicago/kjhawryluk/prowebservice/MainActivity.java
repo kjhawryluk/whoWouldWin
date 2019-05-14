@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.StarWarsRepository;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 
 public class MainActivity extends AppCompatActivity implements FightFragment.OnFightListener {
     private TextView mTextMessage;
     private PersonEntity fighter1;
     private PersonEntity fighter2;
+    private PlanetEntity mPlanetEntity;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -27,9 +29,12 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
             switch (item.getItemId()) {
                 case R.id.fighter1Nav:
                     fighterName = fighter1.getName();
-                    if (fighterName != null)
+                    if (fighterName != null) {
                         loadFighter(fighterName);
-                    return true;
+                        return true;
+                    }
+                    return false;
+
                 case R.id.fightNav:
                     if (fighter1 == null || fighter2 == null) {
                         initFight();
@@ -39,9 +44,11 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
                     return true;
                 case R.id.fighter2Nav:
                     fighterName = fighter2.getName();
-                    if (fighterName != null)
+                    if (fighterName != null) {
                         loadFighter(fighterName);
-                    return true;
+                        return true;
+                    }
+                    return false;
             }
             return false;
         }
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
     }
 
     void loadFight() {
-        FightFragment fightFragment = FightFragment.newInstance(fighter1, fighter2);
+        FightFragment fightFragment = FightFragment.newInstance(fighter1, fighter2, mPlanetEntity);
         swapInFragment(fightFragment);
     }
 
@@ -117,5 +124,13 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
 
     public void setFighter2(PersonEntity fighter2) {
         this.fighter2 = fighter2;
+    }
+
+    public PlanetEntity getPlanet() {
+        return mPlanetEntity;
+    }
+
+    public void setPlanet(PlanetEntity planetEntity) {
+        mPlanetEntity = planetEntity;
     }
 }

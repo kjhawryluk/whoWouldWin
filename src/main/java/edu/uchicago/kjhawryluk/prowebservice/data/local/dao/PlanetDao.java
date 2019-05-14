@@ -15,7 +15,7 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 public interface PlanetDao {
 
     @Query("SELECT * FROM planets")
-    LiveData<List<PersonEntity>> loadPlanets();
+    LiveData<List<PlanetEntity>> loadPlanets();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long> savePlanets(List<PlanetEntity> planetEntities);

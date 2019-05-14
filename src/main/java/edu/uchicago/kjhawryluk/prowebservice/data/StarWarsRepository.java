@@ -2,6 +2,9 @@ package edu.uchicago.kjhawryluk.prowebservice.data;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -9,6 +12,7 @@ import android.util.Log;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.StarWarsDatabase;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PlanetDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.ApiConstants;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PeopleResponse;
 
@@ -47,7 +51,7 @@ public class StarWarsRepository {
         this.mPeopleDao = this.mStarWarsDatabase.mPeopleDao();
         this.mPlanetDao = this.mStarWarsDatabase.mPlanetDao();
         this.mStarWarsRestService = getStarWarsRestService();
-        if (isInternetAvailable()) {
+        if (isInternetAvailable(application)) {
             fetchPeople(1);
             fetchPlanets(1);
         }
@@ -144,22 +148,25 @@ public class StarWarsRepository {
         return mPeopleDao.loadPeople();
     }
 
+    public LiveData<List<PlanetEntity>> loadPlanets() {
+        return mPlanetDao.loadPlanets();
+    }
+
     public LiveData<PersonEntity> getPerson(String name) {
         return mPeopleDao.getPerson(name);
     }
 
     /**
-     * https://stackoverflow.com/questions/9570237/android-check-internet-connection
+     * https://developer.android.com/training/monitoring-device-state/connectivity-monitoring
      *
      * @return
      */
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com");
-            return !ipAddr.equals("");
+    public boolean isInternetAvailable(Application application) {
+        ConnectivityManager cm =
+                (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        } catch (Exception e) {
-            return false;
-        }
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 }
