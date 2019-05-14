@@ -19,7 +19,7 @@ public class StarWarsViewModel extends AndroidViewModel {
 
     public StarWarsViewModel(@NonNull Application application) {
         super(application);
-        mStarWarsRepository = new StarWarsRepository(application);
+        mStarWarsRepository = StarWarsRepository.getInstance(application);
         fighters = mStarWarsRepository.loadPeople();
         planets = mStarWarsRepository.loadPlanets();
     }

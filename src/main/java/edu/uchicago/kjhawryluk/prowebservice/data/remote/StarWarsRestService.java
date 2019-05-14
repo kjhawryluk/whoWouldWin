@@ -15,6 +15,6 @@ public interface StarWarsRestService {
     @GET("people/")
     Single<PeopleResponse> loadPeople(@Query("page") int page_num);
 
-    @GET("planet/")
+    @GET("planets/")
     Single<PlanetResponse> loadPlanets(@Query("page") int page_num);
 }

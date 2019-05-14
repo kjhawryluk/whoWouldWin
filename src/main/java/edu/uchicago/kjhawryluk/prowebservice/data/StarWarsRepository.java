@@ -38,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class StarWarsRepository {
-
+    private static StarWarsRepository mInstance;
     private final PeopleDao mPeopleDao;
     private final PlanetDao mPlanetDao;
     private final StarWarsRestService mStarWarsRestService;
@@ -46,7 +46,7 @@ public class StarWarsRepository {
     public static final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
-    public StarWarsRepository(Application application) {
+    private StarWarsRepository(Application application) {
         this.mStarWarsDatabase = StarWarsDatabase.getDatabase(application);
         this.mPeopleDao = this.mStarWarsDatabase.mPeopleDao();
         this.mPlanetDao = this.mStarWarsDatabase.mPlanetDao();
@@ -55,6 +55,12 @@ public class StarWarsRepository {
             fetchPeople(1);
             fetchPlanets(1);
         }
+    }
+
+    public static StarWarsRepository getInstance(Application application) {
+        if (mInstance == null)
+            mInstance = new StarWarsRepository(application);
+        return mInstance;
     }
 
     private void fetchPeople(int pageNum) {
@@ -101,7 +107,7 @@ public class StarWarsRepository {
                         saveResult(planets);
                         int nextPageNum = planets.getNextPageNum();
                         if (nextPageNum > -1)
-                            fetchPeople(nextPageNum);
+                            fetchPlanets(nextPageNum);
                     }
 
                     @Override

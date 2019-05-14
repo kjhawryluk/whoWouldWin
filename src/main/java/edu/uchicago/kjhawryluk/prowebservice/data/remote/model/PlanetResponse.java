@@ -22,7 +22,7 @@ public class PlanetResponse extends PagedResponse implements Serializable {
     private final static long serialVersionUID = -8811980582448267184L;
 
     public PlanetResponse() {
-        BASE_PATH = "https://swapi.co/api/people/?page=";
+        BASE_PATH = "https://swapi.co/api/planets/?page=";
     }
 
     public Integer getCount() {
