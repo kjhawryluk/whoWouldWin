@@ -1,24 +1,27 @@
+
 package edu.uchicago.kjhawryluk.prowebservice.data.remote.model;
 
+import java.io.Serializable;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 
-public class PeopleResponse extends PagedResponse {
-
+public class PlanetResponse extends PagedResponse implements Serializable {
     @SerializedName("count")
     @Expose
     private Integer count;
     @SerializedName("previous")
     @Expose
-    private Object previous;
+    private String previous;
     @SerializedName("results")
     @Expose
-    private List<PersonEntity> mPersonResponses = null;
+    private List<PlanetEntity> mPlanets = null;
+    private final static long serialVersionUID = -8811980582448267184L;
 
-    public PeopleResponse() {
+    public PlanetResponse() {
         BASE_PATH = "https://swapi.co/api/people/?page=";
     }
 
@@ -31,7 +34,7 @@ public class PeopleResponse extends PagedResponse {
     }
 
     public String getNext() {
-        return this.next;
+        return next;
     }
 
     public void setNext(String next) {
@@ -42,16 +45,17 @@ public class PeopleResponse extends PagedResponse {
         return previous;
     }
 
-    public void setPrevious(Object previous) {
+    public void setPrevious(String previous) {
         this.previous = previous;
     }
 
-    public List<PersonEntity> getPersonResponses() {
-        return mPersonResponses;
+    public List<PlanetEntity> getPlanets() {
+        return mPlanets;
     }
 
-    public void setPersonResponses(List<PersonEntity> personResponses) {
-        this.mPersonResponses = personResponses;
+    public void setPlanets(List<PlanetEntity> planets) {
+        this.mPlanets = planets;
     }
+
 
 }

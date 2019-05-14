@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.StarWarsDatabase;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PlanetDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.ApiConstants;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PeopleResponse;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PeopleDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.StarWarsRestService;
+import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PlanetResponse;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StarWarsRepository {
 
     private final PeopleDao mPeopleDao;
+    private final PlanetDao mPlanetDao;
     private final StarWarsRestService mStarWarsRestService;
     private StarWarsDatabase mStarWarsDatabase;
     public static final CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -42,33 +45,70 @@ public class StarWarsRepository {
     public StarWarsRepository(Application application) {
         this.mStarWarsDatabase = StarWarsDatabase.getDatabase(application);
         this.mPeopleDao = this.mStarWarsDatabase.mPeopleDao();
+        this.mPlanetDao = this.mStarWarsDatabase.mPlanetDao();
         this.mStarWarsRestService = getStarWarsRestService();
         if (isInternetAvailable()) {
-            mStarWarsRestService.loadPeople()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<PeopleResponse>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            compositeDisposable.add(d);
-                        }
-
-                        @Override
-                        public void onSuccess(PeopleResponse people) {
-
-                            // data is ready and we can update the UI
-                            saveResult(people);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            // oops, we best show some error message
-                            Log.e("REPSONSE ERROR", e.getMessage());
-                        }
-
-                    });
+            fetchPeople(1);
+            fetchPlanets(1);
         }
     }
+
+    private void fetchPeople(int pageNum) {
+        mStarWarsRestService.loadPeople(pageNum)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<PeopleResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(PeopleResponse people) {
+                        // data is ready and we can update the UI
+                        saveResult(people);
+                        int nextPageNum = people.getNextPageNum();
+                        if (nextPageNum > -1)
+                            fetchPeople(nextPageNum);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.e("REPSONSE ERROR", e.getMessage());
+                    }
+
+                });
+    }
+
+    private void fetchPlanets(int pageNum) {
+        mStarWarsRestService.loadPlanets(pageNum)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<PlanetResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(PlanetResponse planets) {
+                        // data is ready and we can update the UI
+                        saveResult(planets);
+                        int nextPageNum = planets.getNextPageNum();
+                        if (nextPageNum > -1)
+                            fetchPeople(nextPageNum);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.e("REPSONSE ERROR", e.getMessage());
+                    }
+
+                });
+    }
+
 
     void saveResult(PeopleResponse response) {
         new AsyncTask<Void, Void, Boolean>() {
@@ -80,6 +120,15 @@ public class StarWarsRepository {
         }.execute();
     }
 
+    void saveResult(PlanetResponse response) {
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                List<Long> indices = mPlanetDao.savePlanets(response.getPlanets());
+                return true;
+            }
+        }.execute();
+    }
 
 
     private StarWarsRestService getStarWarsRestService() {
@@ -99,10 +148,14 @@ public class StarWarsRepository {
         return mPeopleDao.getPerson(name);
     }
 
+    /**
+     * https://stackoverflow.com/questions/9570237/android-check-internet-connection
+     *
+     * @return
+     */
     public boolean isInternetAvailable() {
         try {
             InetAddress ipAddr = InetAddress.getByName("google.com");
-            //You can replace it with your name
             return !ipAddr.equals("");
 
         } catch (Exception e) {

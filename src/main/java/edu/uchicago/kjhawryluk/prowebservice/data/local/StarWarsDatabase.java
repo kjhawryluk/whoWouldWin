@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PeopleDao;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PlanetDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.typeconverters.ListConverter;
 
@@ -25,6 +26,8 @@ import edu.uchicago.kjhawryluk.prowebservice.data.typeconverters.ListConverter;
 public abstract class StarWarsDatabase extends RoomDatabase {
 
     public abstract PeopleDao mPeopleDao();
+
+    public abstract PlanetDao mPlanetDao();
 
     private static volatile StarWarsDatabase INSTANCE;
 
@@ -57,9 +60,11 @@ public abstract class StarWarsDatabase extends RoomDatabase {
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final PeopleDao mPeopleDao;
+        private final PlanetDao mPlanetDao;
 
         PopulateDbAsync(StarWarsDatabase db) {
             mPeopleDao = db.mPeopleDao();
+            mPlanetDao = db.mPlanetDao();
         }
 
         @Override
