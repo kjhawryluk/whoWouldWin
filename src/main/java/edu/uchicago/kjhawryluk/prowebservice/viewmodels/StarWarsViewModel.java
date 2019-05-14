@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import edu.uchicago.kjhawryluk.prowebservice.data.Resource;
 import edu.uchicago.kjhawryluk.prowebservice.data.StarWarsRepository;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;

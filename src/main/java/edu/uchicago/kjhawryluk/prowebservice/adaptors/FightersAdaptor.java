@@ -1,6 +1,5 @@
 package edu.uchicago.kjhawryluk.prowebservice.adaptors;
 
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.R;
-import edu.uchicago.kjhawryluk.prowebservice.data.Resource;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 
 /**
@@ -46,9 +44,11 @@ public class FightersAdaptor extends ArrayAdapter<PersonEntity> {
 
 
     public int getPosition(@Nullable String item) {
-        for (int pos = 0; pos < mPersonEntities.size(); pos++) {
-            if (mPersonEntities.get(pos).equals(item))
-                return pos;
+        if (mPersonEntities != null) {
+            for (int pos = 0; pos < mPersonEntities.size(); pos++) {
+                if (mPersonEntities.get(pos).equals(item))
+                    return pos;
+            }
         }
         return 0;
     }

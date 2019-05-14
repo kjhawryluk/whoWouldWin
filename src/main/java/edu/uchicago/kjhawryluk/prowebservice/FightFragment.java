@@ -99,7 +99,7 @@ public class FightFragment extends Fragment {
             if (parent.getCount() > 0) {
                 ((OnFightListener) container.getContext()).setFighter1((PersonEntity) mFighter1Spinner.getSelectedItem());
                 ((OnFightListener) container.getContext()).setFighter2((PersonEntity) mFighter2Spinner.getSelectedItem());
-                ((OnFightListener) container.getContext()).setFighter2((PersonEntity) mFighter2Spinner.getSelectedItem());
+                ((OnFightListener) container.getContext()).setPlanet((PlanetEntity) mPlanetSpinner.getSelectedItem());
             }
         }
 
@@ -121,6 +121,7 @@ public class FightFragment extends Fragment {
             if (fighter2 != null) {
                 mFighter2Spinner.setSelection(mFightersAdaptor.getPosition(fighter2.toString()));
             }
+
 
             if (planet != null) {
                 mPlanetSpinner.setSelection(mPlanetsAdaptor.getPosition(planet.toString()));
