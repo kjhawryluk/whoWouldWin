@@ -17,7 +17,7 @@ import java.util.List;
 import edu.uchicago.kjhawryluk.prowebservice.data.typeconverters.ListConverter;
 
 @Entity(tableName = "people")
-public class PersonEntity implements Serializable {
+public class FighterEntity implements Serializable {
 
     @PrimaryKey
     @NonNull
@@ -213,8 +213,8 @@ public class PersonEntity implements Serializable {
         if (obj != null) {
             if (obj instanceof String) {
                 return obj.equals(name);
-            } else if (obj instanceof PersonEntity) {
-                PersonEntity objEntity = (PersonEntity) obj;
+            } else if (obj instanceof FighterEntity) {
+                FighterEntity objEntity = (FighterEntity) obj;
                 return objEntity.getName().equals(name);
             }
         }

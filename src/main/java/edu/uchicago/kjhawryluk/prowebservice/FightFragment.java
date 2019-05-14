@@ -16,7 +16,7 @@ import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.adaptors.FightersAdaptor;
 import edu.uchicago.kjhawryluk.prowebservice.adaptors.PlanetsAdaptor;
-import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 import edu.uchicago.kjhawryluk.prowebservice.viewmodels.StarWarsViewModel;
 
@@ -68,7 +68,7 @@ public class FightFragment extends Fragment {
         mFighter1Spinner.setAdapter(mFightersAdaptor);
         mFighter2Spinner.setAdapter(mFightersAdaptor);
         mPlanetSpinner.setAdapter(mPlanetsAdaptor);
-        mStarWarsViewModel.getFighters().observe(this, (Observer<List<PersonEntity>>)
+        mStarWarsViewModel.getFighters().observe(this, (Observer<List<FighterEntity>>)
                 fighters -> {
                     mFightersAdaptor.setPersonEntities(fighters);
                     setSpinnerValues();
@@ -97,8 +97,8 @@ public class FightFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             if (parent.getCount() > 0) {
-                ((OnFightListener) container.getContext()).setFighter1((PersonEntity) mFighter1Spinner.getSelectedItem());
-                ((OnFightListener) container.getContext()).setFighter2((PersonEntity) mFighter2Spinner.getSelectedItem());
+                ((OnFightListener) container.getContext()).setFighter1((FighterEntity) mFighter1Spinner.getSelectedItem());
+                ((OnFightListener) container.getContext()).setFighter2((FighterEntity) mFighter2Spinner.getSelectedItem());
                 ((OnFightListener) container.getContext()).setPlanet((PlanetEntity) mPlanetSpinner.getSelectedItem());
             }
         }
@@ -157,13 +157,13 @@ public class FightFragment extends Fragment {
     public interface OnFightListener {
         void onFightFragmentInteraction();
 
-        public PersonEntity getFighter1();
+        public FighterEntity getFighter1();
 
-        public void setFighter1(PersonEntity fighter1);
+        public void setFighter1(FighterEntity fighter1);
 
-        public PersonEntity getFighter2();
+        public FighterEntity getFighter2();
 
-        public void setFighter2(PersonEntity fighter2);
+        public void setFighter2(FighterEntity fighter2);
 
         public void setPlanet(PlanetEntity planet);
     }

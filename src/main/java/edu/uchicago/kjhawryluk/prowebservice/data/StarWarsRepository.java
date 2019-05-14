@@ -6,29 +6,25 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.StarWarsDatabase;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PlanetDao;
-import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.ApiConstants;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PeopleResponse;
 
-import java.net.InetAddress;
 import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PeopleDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.StarWarsRestService;
 import edu.uchicago.kjhawryluk.prowebservice.data.remote.model.PlanetResponse;
-import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -124,7 +120,7 @@ public class StarWarsRepository {
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... voids) {
-                List<Long> indices = mPeopleDao.savePeople(response.getPersonResponses());
+                List<Long> indices = mPeopleDao.savePeople(response.getFighterResponses());
                 return true;
             }
         }.execute();
@@ -150,7 +146,7 @@ public class StarWarsRepository {
         return retrofit.create(StarWarsRestService.class);
     }
 
-    public LiveData<List<PersonEntity>> loadPeople() {
+    public LiveData<List<FighterEntity>> loadPeople() {
         return mPeopleDao.loadPeople();
     }
 
@@ -158,7 +154,7 @@ public class StarWarsRepository {
         return mPlanetDao.loadPlanets();
     }
 
-    public LiveData<PersonEntity> getPerson(String name) {
+    public LiveData<FighterEntity> getPerson(String name) {
         return mPeopleDao.getPerson(name);
     }
 

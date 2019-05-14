@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.uchicago.kjhawryluk.prowebservice.R;
-import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 
 /**

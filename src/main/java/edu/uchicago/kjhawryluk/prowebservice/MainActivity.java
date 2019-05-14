@@ -5,19 +5,18 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import edu.uchicago.kjhawryluk.prowebservice.data.StarWarsRepository;
-import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 
 public class MainActivity extends AppCompatActivity implements FightFragment.OnFightListener {
     private TextView mTextMessage;
-    private PersonEntity fighter1;
-    private PersonEntity fighter2;
+    private FighterEntity fighter1;
+    private FighterEntity fighter2;
     private PlanetEntity mPlanetEntity;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -110,19 +109,19 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
     }
 
 
-    public PersonEntity getFighter1() {
+    public FighterEntity getFighter1() {
         return fighter1;
     }
 
-    public void setFighter1(PersonEntity fighter1) {
+    public void setFighter1(FighterEntity fighter1) {
         this.fighter1 = fighter1;
     }
 
-    public PersonEntity getFighter2() {
+    public FighterEntity getFighter2() {
         return fighter2;
     }
 
-    public void setFighter2(PersonEntity fighter2) {
+    public void setFighter2(FighterEntity fighter2) {
         this.fighter2 = fighter2;
     }
 

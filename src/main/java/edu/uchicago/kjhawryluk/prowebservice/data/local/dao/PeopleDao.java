@@ -8,18 +8,18 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 
 @Dao
 public interface PeopleDao {
 
     @Query("SELECT * FROM people")
-    LiveData<List<PersonEntity>> loadPeople();
+    LiveData<List<FighterEntity>> loadPeople();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> savePeople(List<PersonEntity> peopleEntities);
+    List<Long> savePeople(List<FighterEntity> peopleEntities);
 
     @Query("SELECT * FROM people WHERE name=:name")
-    LiveData<PersonEntity> getPerson(String name);
+    LiveData<FighterEntity> getPerson(String name);
 
 }

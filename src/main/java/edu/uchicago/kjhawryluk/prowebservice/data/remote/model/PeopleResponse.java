@@ -4,7 +4,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PersonEntity;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 
 public class PeopleResponse extends PagedResponse {
 
@@ -16,7 +16,7 @@ public class PeopleResponse extends PagedResponse {
     private Object previous;
     @SerializedName("results")
     @Expose
-    private List<PersonEntity> mPersonResponses = null;
+    private List<FighterEntity> mFighterResponses = null;
 
     public PeopleResponse() {
         BASE_PATH = "https://swapi.co/api/people/?page=";
@@ -46,12 +46,12 @@ public class PeopleResponse extends PagedResponse {
         this.previous = previous;
     }
 
-    public List<PersonEntity> getPersonResponses() {
-        return mPersonResponses;
+    public List<FighterEntity> getFighterResponses() {
+        return mFighterResponses;
     }
 
-    public void setPersonResponses(List<PersonEntity> personResponses) {
-        this.mPersonResponses = personResponses;
+    public void setFighterResponses(List<FighterEntity> fighterResponses) {
+        this.mFighterResponses = fighterResponses;
     }
 
 }
