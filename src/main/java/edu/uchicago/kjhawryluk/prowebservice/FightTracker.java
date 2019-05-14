@@ -184,4 +184,20 @@ public class FightTracker {
         }
         return new Double(elemInCommon) / hostSize;
     }
+
+    public int getFighter1Score() {
+        return mFighter1Score;
+    }
+
+    public void setFighter1Score(int fighter1Score) {
+        mFighter1Score = fighter1Score;
+    }
+
+    public int getFighter2Score() {
+        return mFighter2Score;
+    }
+
+    public void setFighter2Score(int fighter2Score) {
+        mFighter2Score = fighter2Score;
+    }
 }
