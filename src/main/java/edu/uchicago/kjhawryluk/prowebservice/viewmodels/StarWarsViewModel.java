@@ -3,10 +3,12 @@ package edu.uchicago.kjhawryluk.prowebservice.viewmodels;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import edu.uchicago.kjhawryluk.prowebservice.FightTracker;
 import edu.uchicago.kjhawryluk.prowebservice.data.StarWarsRepository;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
@@ -38,5 +40,9 @@ public class StarWarsViewModel extends AndroidViewModel {
 
     public void setPlanets(LiveData<List<PlanetEntity>> planets) {
         this.planets = planets;
+    }
+
+    public void startFight(Context activity, FightTracker fightTracker) {
+        mStarWarsRepository.startFight(activity, fightTracker);
     }
 }

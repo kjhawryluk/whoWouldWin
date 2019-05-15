@@ -82,29 +82,31 @@ public class FightFragment extends Fragment {
                     setSpinnerValues();
                 });
 
-        mFighter1Spinner.setOnItemSelectedListener(new SpinnerSelection(container));
-        mFighter2Spinner.setOnItemSelectedListener(new SpinnerSelection(container));
-        mPlanetSpinner.setOnItemSelectedListener(new SpinnerSelection(container));
+        mFighter1Spinner.setOnItemSelectedListener(new SpinnerSelection());
+        mFighter2Spinner.setOnItemSelectedListener(new SpinnerSelection());
+        mPlanetSpinner.setOnItemSelectedListener(new SpinnerSelection());
 
         //TODO Add fight button on click mechanism to show winner.
-
+        mFightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.startFight();
+                }
+            }
+        });
         return root;
     }
 
 
     private class SpinnerSelection implements AdapterView.OnItemSelectedListener {
-        ViewGroup container;
-
-        public SpinnerSelection(ViewGroup container) {
-            this.container = container;
-        }
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             if (parent.getCount() > 0) {
-                ((OnFightListener) container.getContext()).setFighter1((FighterEntity) mFighter1Spinner.getSelectedItem());
-                ((OnFightListener) container.getContext()).setFighter2((FighterEntity) mFighter2Spinner.getSelectedItem());
-                ((OnFightListener) container.getContext()).setPlanet((PlanetEntity) mPlanetSpinner.getSelectedItem());
+                mListener.setFighter1((FighterEntity) mFighter1Spinner.getSelectedItem());
+                mListener.setFighter2((FighterEntity) mFighter2Spinner.getSelectedItem());
+                mListener.setPlanet((PlanetEntity) mPlanetSpinner.getSelectedItem());
             }
         }
 
@@ -134,12 +136,6 @@ public class FightFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onFightFragmentInteraction();
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -160,7 +156,6 @@ public class FightFragment extends Fragment {
 
 
     public interface OnFightListener {
-        void onFightFragmentInteraction();
 
         public FighterEntity getFighter1();
 
@@ -171,6 +166,8 @@ public class FightFragment extends Fragment {
         public void setFighter2(FighterEntity fighter2);
 
         public void setPlanet(PlanetEntity planet);
+
+        public void startFight();
     }
 }
 

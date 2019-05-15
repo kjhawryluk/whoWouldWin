@@ -168,7 +168,11 @@ public class StarWarsRepository {
         return mPlanetDao.getPlanetByUrl(url);
     }
 
-    public class FightCalculationAsync extends AsyncTask<FightTracker, Void, FightTracker> {
+    public void startFight(Context activity, FightTracker fightTracker) {
+        new FightCalculationAsync(activity).execute(fightTracker);
+    }
+
+    private class FightCalculationAsync extends AsyncTask<FightTracker, Void, FightTracker> {
         Context activity;
 
         public FightCalculationAsync(Context activity) {
@@ -178,18 +182,14 @@ public class StarWarsRepository {
         @Override
         protected FightTracker doInBackground(FightTracker... fightTrackers) {
             FightTracker fightTracker = fightTrackers[0];
-            // Pull the fighters
-            fightTracker.setFighter1(getPerson(fightTracker.getFighter1Name()));
-            fightTracker.setFighter2(getPerson(fightTracker.getFighter2Name()));
 
             //Pull the planets.
-            fightTracker.setHostPlanet(getPlanetByName(fightTracker.getHostPlanetName()));
             fightTracker.setPlanet1(getPlanetByName(fightTracker.getFighter1().getHomeworld()));
             fightTracker.setPlanet2(getPlanetByName(fightTracker.getFighter2().getHomeworld()));
 
             //Calculate Score
             fightTracker.calculateScore();
-            return null;
+            return fightTracker;
         }
 
         @Override

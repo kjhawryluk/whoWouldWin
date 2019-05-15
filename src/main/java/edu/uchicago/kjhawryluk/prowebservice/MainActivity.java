@@ -1,5 +1,6 @@
 package edu.uchicago.kjhawryluk.prowebservice;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,12 +13,14 @@ import android.widget.TextView;
 import edu.uchicago.kjhawryluk.prowebservice.data.StarWarsRepository;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
+import edu.uchicago.kjhawryluk.prowebservice.viewmodels.StarWarsViewModel;
 
 public class MainActivity extends AppCompatActivity implements FightFragment.OnFightListener {
     private TextView mTextMessage;
     private FighterEntity fighter1;
     private FighterEntity fighter2;
     private PlanetEntity mPlanetEntity;
+    private StarWarsViewModel mStarWarsViewModel;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
         swapInFragment(fightFragment);
     }
 
+    public void startFight() {
+        FightTracker fightTracker = new FightTracker(fighter1, fighter2, mPlanetEntity);
+        mStarWarsViewModel.startFight(this, fightTracker);
+
+    }
     void swapInFragment(Fragment fragment) {
         this.getSupportFragmentManager()
                 .beginTransaction()
@@ -94,10 +102,7 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
         navView.setSelectedItemId(R.id.fightNav);
         loadFight();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-
-    public void onFightFragmentInteraction() {
+        mStarWarsViewModel = ViewModelProviders.of(this).get(StarWarsViewModel.class);
     }
 
     @Override

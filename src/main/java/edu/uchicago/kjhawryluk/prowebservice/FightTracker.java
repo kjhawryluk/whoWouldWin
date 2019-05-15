@@ -9,9 +9,6 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 
 public class FightTracker {
-    private String mFighter1Name;
-    private String mFighter2Name;
-    private String mHostPlanetName;
     private FighterEntity mFighter1;
     private FighterEntity mFighter2;
     private PlanetEntity mHostPlanet;
@@ -20,24 +17,24 @@ public class FightTracker {
     private int mFighter1Score;
     private int mFighter2Score;
 
-    public FightTracker(String fighter1Name, String fighter2Name, String hostPlanetName) {
-        mFighter1Name = fighter1Name;
-        mFighter2Name = fighter2Name;
-        mHostPlanetName = hostPlanetName;
+    public FightTracker(FighterEntity fighter1, FighterEntity fighter2, PlanetEntity hostPlanet) {
+        mFighter1 = fighter1;
+        mFighter2 = fighter2;
+        mHostPlanet = hostPlanet;
         mFighter1Score = 0;
         mFighter2Score = 0;
     }
 
-
     public void calculateScore() {
-        if (mFighter1Name != null && mFighter2Name != null && mHostPlanetName != null) {
+        if (mFighter1 != null && mFighter2 != null && mHostPlanet != null) {
             setMassPoints();
             setHeightPoints();
             setAgePoints();
             setPlotArmourPoints();
             setVehiclePoints();
             setStarshipPoints();
-            setPlanetPoints();
+            if (mPlanet1 != null && mPlanet2 != null && mHostPlanet != null)
+                setPlanetPoints();
         }
     }
 
@@ -212,30 +209,6 @@ public class FightTracker {
 
     public void setFighter2Score(int fighter2Score) {
         mFighter2Score = fighter2Score;
-    }
-
-    public String getFighter1Name() {
-        return mFighter1Name;
-    }
-
-    public void setFighter1Name(String fighter1Name) {
-        mFighter1Name = fighter1Name;
-    }
-
-    public String getFighter2Name() {
-        return mFighter2Name;
-    }
-
-    public void setFighter2Name(String fighter2Name) {
-        mFighter2Name = fighter2Name;
-    }
-
-    public String getHostPlanetName() {
-        return mHostPlanetName;
-    }
-
-    public void setHostPlanetName(String hostPlanetName) {
-        mHostPlanetName = hostPlanetName;
     }
 
     public FighterEntity getFighter1() {
