@@ -93,7 +93,7 @@ public class FightFragment extends Fragment {
         mFighter2Spinner.setOnItemSelectedListener(new SpinnerSelection());
         mPlanetSpinner.setOnItemSelectedListener(new SpinnerSelection());
 
-        //TODO Add fight button on click mechanism to show winner.
+        //TODO Add fight fight_button on click mechanism to show winner.
         mFightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
