@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FighterFragment"
+    android:paddingLeft="16dp">
+
+    <TextView
+        android:id="@+id/fighterNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Name"
+        android:textSize="30sp"
+        android:layout_weight="10" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="90"
+        app:columnCount="2"
+        app:rowCount="10"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_columnWeight="60">
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="@string/height"
+                app:layout_column="1"
+                app:layout_row="0" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Mass"
+                app:layout_row="1" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Hair Color"
+                app:layout_row="2" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Skin Color"
+                app:layout_row="3" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Eye Color"
+                app:layout_row="4" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Birth Year"
+                app:layout_row="5" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Gender"
+                app:layout_row="6" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Number Of Films"
+                app:layout_row="7" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Number Of Vehicles"
+                app:layout_row="8" />
+
+            <TextView
+                style="@style/leftColStyle"
+                android:text="Number Of Starships"
+                app:layout_row="9" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_columnWeight="40">
+
+            <TextView
+                android:id="@+id/heightTextView"
+                style="@style/rightColStyle"
+                android:text="172cm"
+                app:layout_row="0" />
+
+            <TextView
+                android:id="@+id/massTextView"
+                style="@style/rightColStyle"
+                android:text="77kg"
+                app:layout_row="1" />
+
+            <TextView
+                android:id="@+id/hairColorTextView"
+                style="@style/rightColStyle"
+                android:text="Blond"
+                app:layout_row="2" />
+
+            <TextView
+                android:id="@+id/skinColorTextView"
+                style="@style/rightColStyle"
+                android:text="fair"
+                app:layout_row="3" />
+
+            <TextView
+                android:id="@+id/eyeColorTextView"
+                style="@style/rightColStyle"
+                android:text="Blue"
+                app:layout_row="4" />
+
+            <TextView
+                android:id="@+id/birthYearTextView"
+                style="@style/rightColStyle"
+                android:text="09BBY"
+                app:layout_row="5" />
+
+            <TextView
+                android:id="@+id/genderTextView"
+                style="@style/rightColStyle"
+                android:text="male"
+                app:layout_row="6" />]
+
+            <TextView
+                android:id="@+id/filmCountTextView"
+                style="@style/rightColStyle"
+                android:text="0"
+                app:layout_row="7" />
+
+            <TextView
+                android:id="@+id/vehicleCountTextView"
+                style="@style/rightColStyle"
+                android:text="0"
+                app:layout_row="8" />
+
+            <TextView
+                android:id="@+id/starshipCountTextView"
+                style="@style/rightColStyle"
+                android:text="0"
+                app:layout_row="9" />
+        </LinearLayout>
+    </android.support.v7.widget.GridLayout>
+
+</LinearLayout>
