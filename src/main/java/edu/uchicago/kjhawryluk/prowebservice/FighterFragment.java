@@ -2,12 +2,15 @@ package edu.uchicago.kjhawryluk.prowebservice;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
+import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 
 
 /**
@@ -16,21 +19,15 @@ import butterknife.BindView;
  * create an instance of this fragment.
  */
 public class FighterFragment extends Fragment {
-    private static final String FIGHTER_NAME = "fighterName";
+    private static final String FIGHTER = "fighter";
 
-    private String mFighterName;
+    private FighterEntity mFighter;
     TextView fighterNameTextView;
-    @BindView(R.id.heightTextView)
     TextView heightTextView;
-    @BindView(R.id.massTextView)
     TextView massTextView;
-    @BindView(R.id.hairColorTextView)
     TextView hairColorTextView;
-    @BindView(R.id.eyeColorTextView)
     TextView eyeColorTextView;
-    @BindView(R.id.birthYearTextView)
     TextView birthYearTextView;
-    @BindView(R.id.genderTextView)
     TextView genderTextView;
 
 
@@ -38,10 +35,10 @@ public class FighterFragment extends Fragment {
     }
 
 
-    public static FighterFragment newInstance(String fighterName) {
+    public static FighterFragment newInstance(FighterEntity fighter) {
         FighterFragment fragment = new FighterFragment();
         Bundle args = new Bundle();
-        args.putString(FIGHTER_NAME, fighterName);
+        args.putSerializable(FIGHTER, fighter);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,9 +46,6 @@ public class FighterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mFighterName = getArguments().getString(FIGHTER_NAME);
-        }
     }
 
     @Override
@@ -59,10 +53,28 @@ public class FighterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_fighter, container, false);
-        mFighterName = getArguments().getString(FIGHTER_NAME);
         fighterNameTextView = root.findViewById(R.id.fighterNameTextView);
-        fighterNameTextView.setText(mFighterName);
+        heightTextView = root.findViewById(R.id.heightTextView);
+        massTextView = root.findViewById(R.id.massTextView);
+        hairColorTextView = root.findViewById(R.id.hairColorTextView);
+        eyeColorTextView = root.findViewById(R.id.eyeColorTextView);
+        birthYearTextView = root.findViewById(R.id.birthYearTextView);
+        genderTextView = root.findViewById(R.id.genderTextView);
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
+            mFighter = (FighterEntity) getArguments().getSerializable(FIGHTER);
+            fighterNameTextView.setText(mFighter.getName());
+            heightTextView.setText(mFighter.getHeight());
+            massTextView.setText(mFighter.getMass());
+            hairColorTextView.setText(mFighter.getHairColor());
+            eyeColorTextView.setText(mFighter.getEyeColor());
+            birthYearTextView.setText(mFighter.getBirthYear());
+            genderTextView.setText(mFighter.getGender());
+        }
+    }
 }

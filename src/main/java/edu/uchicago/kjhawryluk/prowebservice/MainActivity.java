@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            String fighterName;
+            FighterEntity fighterEntity;
             switch (item.getItemId()) {
                 case R.id.fighter1Nav:
-                    fighterName = fighter1.getName();
-                    if (fighterName != null) {
-                        loadFighter(fighterName);
+                    fighterEntity = fighter1;
+                    if (fighterEntity != null) {
+                        loadFighter(fighterEntity);
                         return true;
                     }
                     return false;
@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
                     }
                     return true;
                 case R.id.fighter2Nav:
-                    fighterName = fighter2.getName();
-                    if (fighterName != null) {
-                        loadFighter(fighterName);
+                    fighterEntity = fighter2;
+                    if (fighterEntity != null) {
+                        loadFighter(fighterEntity);
                         return true;
                     }
                     return false;
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
     }
 
 
-    void loadFighter(String fighterName) {
+    void loadFighter(FighterEntity fighterName) {
         FighterFragment fighterFragment = FighterFragment.newInstance(fighterName);
         swapInFragment(fighterFragment);
     }

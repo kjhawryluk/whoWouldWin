@@ -19,7 +19,7 @@ public interface PlanetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long> savePlanets(List<PlanetEntity> planetEntities);
 
-    @Query("SELECT * FROM planets WHERE url=:url")
+    @Query("SELECT * FROM planets WHERE url=:url ORDER BY name")
     PlanetEntity getPlanetByUrl(String url);
 
     @Query("SELECT * FROM planets WHERE url=:name LIMIT 1")

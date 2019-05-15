@@ -13,7 +13,7 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 @Dao
 public interface PeopleDao {
 
-    @Query("SELECT * FROM people")
+    @Query("SELECT * FROM people ORDER BY name")
     LiveData<List<FighterEntity>> loadPeople();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -40,10 +40,10 @@ public class FightTracker {
 
     void setMassPoints() {
         try {
-            int fighter1Mass = Integer.parseInt(mFighter1.getMass());
-            int fighter2Mass = Integer.parseInt(mFighter2.getMass());
+            int fighter1Mass = parseIntField(mFighter1.getMass());
+            int fighter2Mass = parseIntField(mFighter2.getMass());
             int weightDifference = fighter1Mass - fighter2Mass;
-            int proratedPoints = weightDifference / 10;
+            int proratedPoints = Math.abs(weightDifference / 10);
             if (fighter1Mass > fighter2Mass) {
                 mFighter1Score += proratedPoints;
             } else {
@@ -54,12 +54,16 @@ public class FightTracker {
         }
     }
 
+    private int parseIntField(String field) {
+        return Integer.parseInt(field.replace(",", ""));
+    }
+
     void setHeightPoints() {
         try {
-            int fighter1Height = Integer.parseInt(mFighter1.getHeight());
-            int fighter2Height = Integer.parseInt(mFighter2.getHeight());
+            int fighter1Height = parseIntField(mFighter1.getHeight());
+            int fighter2Height = parseIntField(mFighter2.getHeight());
             int weightDifference = fighter1Height - fighter2Height;
-            int proratedPoints = (int) Math.round(Math.sqrt(weightDifference));
+            int proratedPoints = Math.abs((int) Math.round(Math.sqrt(weightDifference)));
             if (fighter1Height > fighter2Height) {
                 mFighter1Score += proratedPoints;
             } else {
@@ -70,13 +74,16 @@ public class FightTracker {
         }
     }
 
+    /**
+     * Older wins due to experience.
+     */
     void setAgePoints() {
         try {
             int fighter1BirthYear = getBirthYear(mFighter1.getBirthYear());
             int fighter2BirthYear = getBirthYear(mFighter2.getBirthYear());
             int ageDifference = fighter1BirthYear - fighter2BirthYear;
-            int proratedPoints = (int) Math.round(Math.sqrt(ageDifference));
-            if (fighter1BirthYear > fighter2BirthYear) {
+            int proratedPoints = (int) Math.abs(Math.round(Math.sqrt(ageDifference)));
+            if (fighter1BirthYear < fighter2BirthYear) {
                 mFighter1Score += proratedPoints;
             } else {
                 mFighter2Score += proratedPoints;
@@ -89,10 +96,10 @@ public class FightTracker {
     int getBirthYear(String birthYear) {
         if (birthYear.contains("BBY")) {
             birthYear = birthYear.replace("BBY", "");
-            return (-1) * Integer.parseInt(birthYear);
+            return (-1) * parseIntField(birthYear);
         } else {
             birthYear = birthYear.replace("ABY", "");
-            return Integer.parseInt(birthYear);
+            return parseIntField(birthYear);
         }
     }
 
@@ -132,7 +139,7 @@ public class FightTracker {
             points += 1;
 
         try {
-            int hostDiam = Integer.parseInt(mHostPlanet.getDiameter());
+            int hostDiam = parseIntField(mHostPlanet.getDiameter());
             if (Math.abs(parseDifference(mHostPlanet.getDiameter(), planet.getDiameter())) < .25 * hostDiam)
                 points += 1;
         } catch (NumberFormatException e) {
@@ -151,9 +158,10 @@ public class FightTracker {
         return points;
     }
 
+
     private int parseDifference(String metric1, String metric2) {
         try {
-            return Integer.parseInt(metric1) - Integer.parseInt(metric2);
+            return parseIntField(metric1) - parseIntField(metric2);
         } catch (NumberFormatException e) {
             return 0;
         }
