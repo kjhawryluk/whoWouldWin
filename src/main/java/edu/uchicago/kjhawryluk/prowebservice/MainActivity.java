@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
         mStarWarsViewModel.startFight(this, fightTracker);
 
     }
+
     void swapInFragment(Fragment fragment) {
         this.getSupportFragmentManager()
                 .beginTransaction()
@@ -100,9 +101,11 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setSelectedItemId(R.id.fightNav);
-        loadFight();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mStarWarsViewModel = ViewModelProviders.of(this).get(StarWarsViewModel.class);
+        if (savedInstanceState == null) {
+            loadFight();
+        }
     }
 
     @Override

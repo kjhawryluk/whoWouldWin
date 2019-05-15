@@ -44,8 +44,9 @@ public class FighterFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
