@@ -20,6 +20,8 @@ public interface PlanetDao {
     List<Long> savePlanets(List<PlanetEntity> planetEntities);
 
     @Query("SELECT * FROM planets WHERE url=:url")
-    LiveData<PlanetEntity> getPlanet(String url);
+    PlanetEntity getPlanetByUrl(String url);
 
+    @Query("SELECT * FROM planets WHERE url=:name LIMIT 1")
+    PlanetEntity getPlanetByName(String name);
 }

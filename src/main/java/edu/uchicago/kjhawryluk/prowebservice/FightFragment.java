@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.io.Serializable;
@@ -32,6 +33,7 @@ public class FightFragment extends Fragment {
     Spinner mFighter1Spinner;
     Spinner mFighter2Spinner;
     Spinner mPlanetSpinner;
+    Button mFightButton;
     private StarWarsViewModel mStarWarsViewModel;
 
     public FightFragment() {
@@ -63,6 +65,7 @@ public class FightFragment extends Fragment {
         mFighter1Spinner = root.findViewById(R.id.fighter1Spinner);
         mFighter2Spinner = root.findViewById(R.id.fighter2Spinner);
         mPlanetSpinner = root.findViewById(R.id.planetSpinner);
+        mFightButton = root.findViewById(R.id.fightButton);
 
         //Using the same adaptor to listen for new fighters.
         mFighter1Spinner.setAdapter(mFightersAdaptor);

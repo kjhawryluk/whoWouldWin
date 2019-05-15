@@ -7,7 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import edu.uchicago.kjhawryluk.prowebservice.FightTracker;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.StarWarsDatabase;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PlanetDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
@@ -154,9 +156,56 @@ public class StarWarsRepository {
         return mPlanetDao.loadPlanets();
     }
 
-    public LiveData<FighterEntity> getPerson(String name) {
+    public FighterEntity getPerson(String name) {
         return mPeopleDao.getPerson(name);
     }
+
+    public PlanetEntity getPlanetByName(String name) {
+        return mPlanetDao.getPlanetByName(name);
+    }
+
+    public PlanetEntity getPlanetByUrl(String url) {
+        return mPlanetDao.getPlanetByUrl(url);
+    }
+
+    public class FightCalculationAsync extends AsyncTask<FightTracker, Void, FightTracker> {
+        Context activity;
+
+        public FightCalculationAsync(Context activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        protected FightTracker doInBackground(FightTracker... fightTrackers) {
+            FightTracker fightTracker = fightTrackers[0];
+            // Pull the fighters
+            fightTracker.setFighter1(getPerson(fightTracker.getFighter1Name()));
+            fightTracker.setFighter2(getPerson(fightTracker.getFighter2Name()));
+
+            //Pull the planets.
+            fightTracker.setHostPlanet(getPlanetByName(fightTracker.getHostPlanetName()));
+            fightTracker.setPlanet1(getPlanetByName(fightTracker.getFighter1().getHomeworld()));
+            fightTracker.setPlanet2(getPlanetByName(fightTracker.getFighter2().getHomeworld()));
+
+            //Calculate Score
+            fightTracker.calculateScore();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(FightTracker fightTracker) {
+            super.onPostExecute(fightTracker);
+            FighterEntity winner = fightTracker.getWinner();
+            String message;
+            if (winner == null) {
+                message = "It's a tie!";
+            } else {
+                message = winner.getName() + " Wins the fight!";
+            }
+            Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     /**
      * https://developer.android.com/training/monitoring-device-state/connectivity-monitoring

@@ -9,6 +9,9 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.PlanetEntity;
 
 public class FightTracker {
+    private String mFighter1Name;
+    private String mFighter2Name;
+    private String mHostPlanetName;
     private FighterEntity mFighter1;
     private FighterEntity mFighter2;
     private PlanetEntity mHostPlanet;
@@ -17,24 +20,25 @@ public class FightTracker {
     private int mFighter1Score;
     private int mFighter2Score;
 
-    public FightTracker(FighterEntity fighter1, FighterEntity fighter2, PlanetEntity hostPlanet, PlanetEntity planet1, PlanetEntity planet2) {
-        mFighter1 = fighter1;
-        mFighter2 = fighter2;
-        mHostPlanet = hostPlanet;
-        mPlanet1 = planet1;
-        mPlanet2 = planet2;
+    public FightTracker(String fighter1Name, String fighter2Name, String hostPlanetName) {
+        mFighter1Name = fighter1Name;
+        mFighter2Name = fighter2Name;
+        mHostPlanetName = hostPlanetName;
         mFighter1Score = 0;
         mFighter2Score = 0;
     }
 
-    void calculateScore() {
-        setMassPoints();
-        setHeightPoints();
-        setAgePoints();
-        setPlotArmourPoints();
-        setVehiclePoints();
-        setStarshipPoints();
-        setPlanetPoints();
+
+    public void calculateScore() {
+        if (mFighter1Name != null && mFighter2Name != null && mHostPlanetName != null) {
+            setMassPoints();
+            setHeightPoints();
+            setAgePoints();
+            setPlotArmourPoints();
+            setVehiclePoints();
+            setStarshipPoints();
+            setPlanetPoints();
+        }
     }
 
     void setMassPoints() {
@@ -185,6 +189,15 @@ public class FightTracker {
         return new Double(elemInCommon) / hostSize;
     }
 
+    public FighterEntity getWinner() {
+        if (mFighter1Score > mFighter2Score) {
+            return mFighter1;
+        } else if (mFighter2Score > mFighter1Score) {
+            return mFighter2;
+        } else
+            return null;
+    }
+
     public int getFighter1Score() {
         return mFighter1Score;
     }
@@ -199,5 +212,69 @@ public class FightTracker {
 
     public void setFighter2Score(int fighter2Score) {
         mFighter2Score = fighter2Score;
+    }
+
+    public String getFighter1Name() {
+        return mFighter1Name;
+    }
+
+    public void setFighter1Name(String fighter1Name) {
+        mFighter1Name = fighter1Name;
+    }
+
+    public String getFighter2Name() {
+        return mFighter2Name;
+    }
+
+    public void setFighter2Name(String fighter2Name) {
+        mFighter2Name = fighter2Name;
+    }
+
+    public String getHostPlanetName() {
+        return mHostPlanetName;
+    }
+
+    public void setHostPlanetName(String hostPlanetName) {
+        mHostPlanetName = hostPlanetName;
+    }
+
+    public FighterEntity getFighter1() {
+        return mFighter1;
+    }
+
+    public void setFighter1(FighterEntity fighter1) {
+        mFighter1 = fighter1;
+    }
+
+    public FighterEntity getFighter2() {
+        return mFighter2;
+    }
+
+    public void setFighter2(FighterEntity fighter2) {
+        mFighter2 = fighter2;
+    }
+
+    public PlanetEntity getHostPlanet() {
+        return mHostPlanet;
+    }
+
+    public void setHostPlanet(PlanetEntity hostPlanet) {
+        mHostPlanet = hostPlanet;
+    }
+
+    public PlanetEntity getPlanet1() {
+        return mPlanet1;
+    }
+
+    public void setPlanet1(PlanetEntity planet1) {
+        mPlanet1 = planet1;
+    }
+
+    public PlanetEntity getPlanet2() {
+        return mPlanet2;
+    }
+
+    public void setPlanet2(PlanetEntity planet2) {
+        mPlanet2 = planet2;
     }
 }

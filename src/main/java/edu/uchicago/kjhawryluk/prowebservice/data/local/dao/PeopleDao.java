@@ -20,6 +20,6 @@ public interface PeopleDao {
     List<Long> savePeople(List<FighterEntity> peopleEntities);
 
     @Query("SELECT * FROM people WHERE name=:name")
-    LiveData<FighterEntity> getPerson(String name);
+    FighterEntity getPerson(String name);
 
 }
