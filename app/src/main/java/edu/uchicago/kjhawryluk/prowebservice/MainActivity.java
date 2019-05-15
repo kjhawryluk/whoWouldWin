@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
     }
 
 
-    void loadFighter(FighterEntity fighterName) {
-        FighterFragment fighterFragment = FighterFragment.newInstance(fighterName);
+    void loadFighter(FighterEntity fighter) {
+        FighterFragment fighterFragment = FighterFragment.newInstance(fighter);
         swapInFragment(fighterFragment);
     }
 
@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
         swapInFragment(fightFragment);
     }
 
+    void launchWinner(FighterEntity winner) {
+        FighterFragment fighterFragment = FighterFragment.newInstance(winner, true);
+        swapInFragment(fighterFragment);
+    }
     public void startFight() {
         FightTracker fightTracker = new FightTracker(fighter1, fighter2, mPlanetEntity);
         mStarWarsViewModel.startFight(this, fightTracker);
@@ -104,7 +108,12 @@ public class MainActivity extends AppCompatActivity implements FightFragment.OnF
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mStarWarsViewModel = ViewModelProviders.of(this).get(StarWarsViewModel.class);
         if (savedInstanceState == null) {
-            loadFight();
+            FighterEntity winner = (FighterEntity) getIntent().getSerializableExtra(StarWarsRepository.WINNER);
+            if (winner != null) {
+                launchWinner(winner);
+            } else {
+                loadFight();
+            }
         }
     }
 

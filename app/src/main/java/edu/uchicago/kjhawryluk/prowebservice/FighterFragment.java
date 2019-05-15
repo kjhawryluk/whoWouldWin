@@ -21,6 +21,7 @@ import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
  */
 public class FighterFragment extends Fragment {
     private static final String FIGHTER = "fighter";
+    public static final String IS_WINNER = "isWinner";
 
     private FighterEntity mFighter;
     TextView fighterNameTextView;
@@ -30,7 +31,7 @@ public class FighterFragment extends Fragment {
     TextView eyeColorTextView;
     TextView birthYearTextView;
     TextView genderTextView;
-
+    TextView winnerTextView;
 
     public FighterFragment() {
     }
@@ -44,6 +45,14 @@ public class FighterFragment extends Fragment {
         return fragment;
     }
 
+    public static FighterFragment newInstance(FighterEntity fighter, boolean isWinner) {
+        FighterFragment fragment = new FighterFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(FIGHTER, fighter);
+        args.putBoolean(IS_WINNER, isWinner);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +71,7 @@ public class FighterFragment extends Fragment {
         eyeColorTextView = root.findViewById(R.id.eyeColorTextView);
         birthYearTextView = root.findViewById(R.id.birthYearTextView);
         genderTextView = root.findViewById(R.id.genderTextView);
+        winnerTextView = root.findViewById(R.id.winner);
         return root;
     }
 
@@ -70,6 +80,7 @@ public class FighterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             mFighter = (FighterEntity) getArguments().getSerializable(FIGHTER);
+            showWinner();
             fighterNameTextView.setText(mFighter.getName());
             heightTextView.setText(mFighter.getHeight());
             massTextView.setText(mFighter.getMass());
@@ -77,6 +88,14 @@ public class FighterFragment extends Fragment {
             eyeColorTextView.setText(mFighter.getEyeColor());
             birthYearTextView.setText(mFighter.getBirthYear());
             genderTextView.setText(mFighter.getGender());
+        }
+    }
+
+    private void showWinner() {
+        if (getArguments().getBoolean(IS_WINNER)) {
+            winnerTextView.setVisibility(View.VISIBLE);
+        } else {
+            winnerTextView.setVisibility(View.INVISIBLE);
         }
     }
 }

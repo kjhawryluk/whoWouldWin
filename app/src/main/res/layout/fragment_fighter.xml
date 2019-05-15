@@ -6,7 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".FighterFragment"
-    android:paddingLeft="16dp">
+    android:paddingLeft="16dp"
+    android:background="@color/colorBackground">
+
+    <TextView
+        android:id="@+id/winner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Winner!"
+        android:textSize="30sp"
+        android:layout_weight="10"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:textColor="@color/lightSaberGreen" />
 
     <TextView
         android:id="@+id/fighterNameTextView"
@@ -14,7 +26,8 @@
         android:layout_height="0dp"
         android:text="Name"
         android:textSize="30sp"
-        android:layout_weight="10" />
+        android:layout_weight="10"
+        android:textColor="@color/colorPrimaryFont" />
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"

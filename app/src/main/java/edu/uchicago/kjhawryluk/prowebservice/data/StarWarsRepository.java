@@ -1,8 +1,10 @@
 package edu.uchicago.kjhawryluk.prowebservice.data;
 
+import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import edu.uchicago.kjhawryluk.prowebservice.FightTracker;
+import edu.uchicago.kjhawryluk.prowebservice.MainActivity;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.StarWarsDatabase;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.dao.PlanetDao;
 import edu.uchicago.kjhawryluk.prowebservice.data.local.entity.FighterEntity;
@@ -36,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class StarWarsRepository {
+    public static final String WINNER = "WINNER";
     private static StarWarsRepository mInstance;
     private final PeopleDao mPeopleDao;
     private final PlanetDao mPlanetDao;
@@ -196,13 +200,10 @@ public class StarWarsRepository {
         protected void onPostExecute(FightTracker fightTracker) {
             super.onPostExecute(fightTracker);
             FighterEntity winner = fightTracker.getWinner();
-            String message;
-            if (winner == null) {
-                message = "It's a tie!";
-            } else {
-                message = winner.getName() + " Wins the fight!";
-            }
-            Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtra(WINNER, winner);
+            activity.startActivity(intent);
+            ((Activity) activity).finish();
         }
     }
 
