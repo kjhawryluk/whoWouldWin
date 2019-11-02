@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FighterFragment"
+    tools:context="edu.uchicago.kjhawryluk.whoWouldWin.FighterFragment"
     android:paddingLeft="16dp"
     android:background="@color/colorBackground">
 
