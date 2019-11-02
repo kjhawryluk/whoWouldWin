@@ -1,4 +1,4 @@
-package edu.uchicago.kjhawryluk.prowebservice;
+package edu.uchicago.kjhawryluk.whoWouldWin;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("edu.uchicago.kjhawryluk.prowebservice", appContext.getPackageName());
+        assertEquals("edu.uchicago.kjhawryluk.whoWouldWin", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package edu.uchicago.kjhawryluk.prowebservice;
+package edu.uchicago.kjhawryluk.whoWouldWin;
 
 import org.junit.Test;
 
